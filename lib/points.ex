@@ -13,7 +13,12 @@ defmodule Tetris.Points do
 
   @spec mirror(any) :: [any]
   def mirror(points) do
-    Enum.map(points, fn {x, y} -> {4 - x, y} end)
+    Enum.map(points, fn {x, y} -> {5 - x, y} end)
+  end
+
+  @spec flip(any) :: [any]
+  def flip(points) do
+    Enum.map(points, fn {x, y} -> {x, 5 - y} end)
   end
 
   @spec rotate_90(any) :: [any]

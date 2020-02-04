@@ -16,6 +16,7 @@ defmodule Tetris.Points do
     Enum.map(points, fn {x, y} -> {5 - x, y} end)
   end
 
+  @spec mirror(any, boolean) :: any
   def mirror(points, false), do: points
   def mirror(points, true), do: mirror(points)
 
@@ -31,6 +32,7 @@ defmodule Tetris.Points do
     |> mirror()
   end
 
+  @spec rotate(any, non_neg_integer) :: any
   def rotate(points, 0), do: points
 
   def rotate(points, degrees) do

@@ -76,7 +76,6 @@ defmodule Tetris.Brick do
   def rotate(270), do: 0
   def rotate(degrees), do: degrees + 90
 
-  @spec shape(%{name: :i | :l | :o | :t | :z}) :: [{2 | 3, 1 | 2 | 3 | 4}, ...]
   def shape(%{name: :i}), do: [{2, 1}, {2, 2}, {2, 3}, {2, 4}]
   def shape(%{name: :o}), do: [{2, 2}, {3, 2}, {2, 3}, {3, 3}]
   def shape(%{name: :z}), do: [{2, 2}, {2, 3}, {3, 3}, {3, 4}]
@@ -90,14 +89,12 @@ defmodule Tetris.Brick do
     |> Points.mirror(brick.reflection)
   end
 
-  @spec to_string(any) :: none
   def to_string(brick) do
     brick
     |> prepare()
     |> Points.to_string()
   end
 
-  @spec print(any) :: none
   def print(brick) do
     brick
     |> prepare()
@@ -109,7 +106,6 @@ defmodule Tetris.Brick do
   defimpl Inspect, for: Tetris.Brick do
     import Inspect.Algebra
 
-    @spec inspect(any, any) :: none
     def inspect(brick, _opts) do
       concat([
         Tetris.Brick.to_string(brick),

@@ -83,19 +83,43 @@ defmodule Tetris.Brick do
   def shape(%{name: :l}), do: [{2, 1}, {2, 2}, {2, 3}, {3, 3}]
   def shape(%{name: :t}), do: [{2, 1}, {2, 2}, {3, 2}, {2, 3}]
 
-  @spec to_string(%{name: :i | :l | :o | :t | :z}) :: binary
-  def to_string(brick) do
+  def prepare(brick) do
     brick
     |> shape()
+    |> Points.rotate(brick.rotation)
+    |> Points.mirror(brick.reflection)
+  end
+
+  @spec to_string(any) :: none
+  def to_string(brick) do
+    brick
+    |> prepare()
     |> Points.to_string()
   end
 
-  @spec print(%{name: :i | :l | :o | :t | :z}) :: %{name: :i | :l | :o | :t | :z}
+  @spec print(any) :: none
   def print(brick) do
     brick
-    |> shape()
+    |> prepare()
     |> Points.print()
 
     brick
+  end
+
+  defimpl Inspect, for: Tetris.Brick do
+    import Inspect.Algebra
+
+    @spec inspect(any, any) :: none
+    def inspect(brick, _opts) do
+      concat([
+        Tetris.Brick.to_string(brick),
+        "\n",
+        inspect(brick.location),
+        " ",
+        inspect(brick.reflection),
+        " ",
+        inspect(brick.rotation)
+      ])
+    end
   end
 end

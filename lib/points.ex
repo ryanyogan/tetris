@@ -36,4 +36,25 @@ defmodule Tetris.Points do
     |> rotate_90()
     |> rotate(degrees - 90)
   end
+
+  @spec to_string(any) :: binary
+  def to_string(points) do
+    map =
+      points
+      |> Enum.map(fn key -> {key, "◼︎"} end)
+      |> Map.new()
+
+    for x <- 1..4, y <- 1..4 do
+      Map.get(map, {y, x}, "◻︎")
+    end
+    |> Enum.chunk_every(4)
+    |> Enum.map(&Enum.join/1)
+    |> Enum.join("\n")
+  end
+
+  @spec print(any) :: any
+  def print(brick) do
+    IO.puts __MODULE__.to_string(brick)
+    brick
+  end
 end

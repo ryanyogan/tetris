@@ -1,4 +1,6 @@
 defmodule Tetris.Brick do
+  alias Tetris.Points
+
   defstruct name: :i,
             location: {40, 0},
             rotation: 0,
@@ -80,4 +82,20 @@ defmodule Tetris.Brick do
   def shape(%{name: :z}), do: [{2, 2}, {2, 3}, {3, 3}, {3, 4}]
   def shape(%{name: :l}), do: [{2, 1}, {2, 2}, {2, 3}, {3, 3}]
   def shape(%{name: :t}), do: [{2, 1}, {2, 2}, {3, 2}, {2, 3}]
+
+  @spec to_string(%{name: :i | :l | :o | :t | :z}) :: binary
+  def to_string(brick) do
+    brick
+    |> shape()
+    |> Points.to_string()
+  end
+
+  @spec print(%{name: :i | :l | :o | :t | :z}) :: %{name: :i | :l | :o | :t | :z}
+  def print(brick) do
+    brick
+    |> shape()
+    |> Points.print()
+
+    brick
+  end
 end

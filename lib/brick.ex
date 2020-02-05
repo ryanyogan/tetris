@@ -1,6 +1,8 @@
 defmodule Tetris.Brick do
   alias Tetris.Points
 
+  @x_center 40
+
   defstruct name: :i,
             location: {40, 0},
             rotation: 0,
@@ -102,6 +104,16 @@ defmodule Tetris.Brick do
 
     brick
   end
+
+  @spec color(%{name: :i | :l | :o | :t | :z}) :: :blue | :green | :orange | :red | :yellow
+  def color(%{name: :i}), do: :blue
+  def color(%{name: :l}), do: :green
+  def color(%{name: :z}), do: :orange
+  def color(%{name: :o}), do: :red
+  def color(%{name: :t}), do: :yellow
+
+  @spec x_center :: 40
+  def x_center(), do: @x_center
 
   defimpl Inspect, for: Tetris.Brick do
     import Inspect.Algebra

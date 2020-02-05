@@ -1,6 +1,5 @@
 defmodule Tetris.Points do
-  @spec translate(any, {any, any}) :: [any]
-  def translate(points, {x, y}) do
+  def move_to_location(points, {x, y} = _location) do
     Enum.map(points, fn {dx, dy} ->
       {dx + x, dy + y}
     end)
@@ -42,6 +41,14 @@ defmodule Tetris.Points do
 
     points
   end
+
+  @spec with_color(any, any) :: [any]
+  def with_color(points, color) do
+    Enum.map(points, fn point -> add_color(point, color) end)
+  end
+
+  defp add_color({_x, _y, _c} = point, _color), do: point
+  defp add_color({x, y}, color), do: {x, y, color}
 
   @spec to_string(any) :: binary
   def to_string(points) do

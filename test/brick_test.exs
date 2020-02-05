@@ -50,8 +50,8 @@ defmodule Tetris.BrickTest do
     actual_points =
       new_brick()
       |> Brick.shape()
-      |> Points.translate({1, 1})
-      |> Points.translate({0, 1})
+      |> Points.move_to_location({1, 1})
+      |> Points.move_to_location({0, 1})
 
     assert actual_points == [{3, 3}, {3, 4}, {3, 5}, {3, 6}]
   end
@@ -66,6 +66,35 @@ defmodule Tetris.BrickTest do
     |> assert_point({1, 4})
     |> Points.rotate_90()
     |> assert_point({1, 1})
+  end
+
+  test "should convert brick to string" do
+    actual = new_brick() |> Tetris.Brick.to_string()
+    expected = "◻︎◼︎◻︎◻︎\n◻︎◼︎◻︎◻︎\n◻︎◼︎◻︎◻︎\n◻︎◼︎◻︎◻︎"
+
+    assert actual == expected
+  end
+
+  test "should inspect bricks" do
+    actual = new_brick() |> inspect()
+
+    expected = """
+    ◻︎◼︎◻︎◻︎
+    ◻︎◼︎◻︎◻︎
+    ◻︎◼︎◻︎◻︎
+    ◻︎◼︎◻︎◻︎
+    {#{x_center()}, 0} false 0
+    """
+
+    assert "#{actual}\n" == expected
+  end
+
+  test "should return bricks color" do
+    assert new_brick(name: :i) |> color() == :blue
+    assert new_brick(name: :l) |> color() == :green
+    assert new_brick(name: :o) |> color() == :red
+    assert new_brick(name: :z) |> color() == :orange
+    assert new_brick(name: :t) |> color() == :yellow
   end
 
   def assert_point([actual], expected) do

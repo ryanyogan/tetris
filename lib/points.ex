@@ -42,7 +42,6 @@ defmodule Tetris.Points do
     points
   end
 
-  @spec with_color(any, any) :: [any]
   def with_color(points, color) do
     Enum.map(points, fn point -> add_color(point, color) end)
   end

@@ -105,7 +105,6 @@ defmodule Tetris.Brick do
     brick
   end
 
-  @spec color(%{name: :i | :l | :o | :t | :z}) :: :blue | :green | :orange | :red | :yellow
   def color(%{name: :i}), do: :blue
   def color(%{name: :l}), do: :green
   def color(%{name: :z}), do: :orange
@@ -114,6 +113,13 @@ defmodule Tetris.Brick do
 
   @spec x_center :: 40
   def x_center(), do: @x_center
+
+  def render(brick) do
+    brick
+    |> prepare()
+    |> Points.move_to_location(brick.location)
+    |> Points.with_color(color(brick))
+  end
 
   defimpl Inspect, for: Tetris.Brick do
     import Inspect.Algebra
